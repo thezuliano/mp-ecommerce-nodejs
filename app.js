@@ -1,8 +1,8 @@
 var express = require('express');
-var exphbs  = require('express-handlebars');
- 
+var exphbs = require('express-handlebars');
+
 var app = express();
- 
+
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
@@ -15,7 +15,15 @@ app.get('/detail', function (req, res) {
 });
 
 app.use(express.static('assets'));
- 
+
 app.use('/assets', express.static(__dirname + '/assets'));
- 
-app.listen(3000);
+
+if (process.env.PORT) {
+    console.log('Usando puerto del proceso...');
+} else {
+    console.log('Usando valor directo...');
+}
+
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => console.log(`Escuchando en el puerto: ${port} ...`));
